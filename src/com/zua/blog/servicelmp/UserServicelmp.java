@@ -1,5 +1,7 @@
 package com.zua.blog.servicelmp;
 
+import java.util.List;
+
 import com.zua.blog.dao.UserDao;
 import com.zua.blog.entity.User;
 import com.zua.blog.service.UserService;
@@ -46,6 +48,16 @@ public class UserServicelmp implements UserService {
 	public boolean loginEmail(String email, String password) {
 		boolean f = userDao.loginEmail(email, password);
 		return f;
+	}
+
+	@Override
+	public List<User> allUser() {
+		return userDao.allUser();
+	}
+
+	@Override
+	public List<User> selectUser(String username) {
+		return userDao.selectUser(username);
 	}
 
 }

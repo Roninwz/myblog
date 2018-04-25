@@ -14,7 +14,7 @@ import com.zua.blog.entity.Content;
 public class ArticleDaolmp implements ArticleDao {
 	private SessionFactory sessionFactory;
 	// private static final ThreadLocal<Session> threadLocal = new
-	// ThreadLocal<Session>(); //定义ThreadLocal对象
+	// ThreadLocal<Session>(); 
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -26,7 +26,6 @@ public class ArticleDaolmp implements ArticleDao {
 		//Category ca=new Category();
 		
 		Session session = sessionFactory.openSession();
-		//开启事务           
 		session.beginTransaction();
 		//co.setContent(article.getContent().getContent());
 		
@@ -52,7 +51,6 @@ public class ArticleDaolmp implements ArticleDao {
 		//article.se
 		session.save(article);
 		session.getTransaction().commit();           
-		//使用openSession，当最后一个业务逻辑完成后必须关闭session           
 		session.close();  
 		return true;
 	}

@@ -86,6 +86,9 @@
 		<action name="admin_logout" class="userAction" method="login">
 			<result name="logout">/jsp/admin/login.jsp</result>
 		</action>
+		<action name="exportexcel" class="userAction" method="exportExcel">
+			<result name="export_success">/jsp/admin/index.jsp</result>
+		</action>
 
 	</package>
 

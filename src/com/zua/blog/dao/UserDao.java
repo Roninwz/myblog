@@ -1,11 +1,18 @@
 package com.zua.blog.dao;
 
+import java.util.List;
+
 import com.zua.blog.entity.User;
 
 public interface UserDao {
-	//ÓÃÓÚÓÃ»§ÃûºÍÓÊÏä¶¼ÄÜµÇÂ¼
+	
     public boolean loginUsername(String username, String password);
 	public boolean loginEmail(String email, String password);
 //	public boolean login(User user);
 	public boolean register(User user);
+	//æŸ¥è¯¢æ‰€æœ‰ç”¨æˆ·
+	public List<User> allUser();
+	
+	//æ ¹æ®ç”¨æˆ·åæŸ¥æ‰¾ç”¨æˆ·
+	public List<User> selectUser(String username);
 }

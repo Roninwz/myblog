@@ -79,18 +79,12 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <h1 class="page-header">信息总览</h1>
       <div class="row placeholders">
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>文章</h4>
-          <span class="text-muted">0 条</span> </div>
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>评论</h4>
-          <span class="text-muted">0 条</span> </div>
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>友链</h4>
-          <span class="text-muted">0 条</span> </div>
-        <div class="col-xs-6 col-sm-3 placeholder">
-          <h4>访问量</h4>
-          <span class="text-muted">0</span> </div>
+        <div>
+        <form action="exportexcel" method="post">
+        <input type="text" name="filename" style="width: 200px;">
+        <input type="submit" name="submit" value="导出excel">
+        </form>
+        </div>
       </div>
       <h1 class="page-header">状态</h1>
       <div class="table-responsive">

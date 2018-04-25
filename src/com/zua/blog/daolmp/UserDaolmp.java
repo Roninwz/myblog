@@ -1,6 +1,7 @@
 package com.zua.blog.daolmp;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Session;
@@ -8,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.zua.blog.dao.UserDao;
+import com.zua.blog.entity.Article;
 import com.zua.blog.entity.User;
 
 public class UserDaolmp implements UserDao {
@@ -101,6 +103,33 @@ public class UserDaolmp implements UserDao {
 		}
 		session.close();
 		return flag;
+	}
+
+
+	@Override
+	public List<User> allUser() {
+
+		Session session = sessionFactory.openSession();
+		
+		List<User> entities = session.createQuery("from User").list();
+		
+
+		 session.close();
+		 
+		 return entities;
+	}
+
+
+	@Override
+	public List<User> selectUser(String username) {
+       Session session = sessionFactory.openSession();
+		
+		List<User> entities = session.createQuery("from User as u where u.username like '%"+username+"%'").list();
+		
+
+		 session.close();
+		 
+		 return entities;
 	}
 
 }
