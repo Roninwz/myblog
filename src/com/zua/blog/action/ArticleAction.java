@@ -1,11 +1,7 @@
 package com.zua.blog.action;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.naming.java.javaURLContextFactory;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -96,9 +92,7 @@ private int categorys;
 		this.categorys = categorys;
 	}
 
-	/*
-	 * 前台主页
-	 */
+	
 	public String index() {
 		List<Article> articles = articleService.showZuiXinArticle();
 		// System.out.println("ggg");
@@ -111,24 +105,16 @@ private int categorys;
 		return "index_success";
 	}
 
-	/*
-	 * 显示热门文章
-	 */
+	
 	public String showR() {
 		return "showR_success";
 	}
 
-	/*
-	 * 显示最新文章
-	 */
 	public String showZ() {
 
 		return "showZ_success";
 	}
 
-	/*
-	 * 显示单个文章页面
-	 */
 	public String selectArticle() {
 		// String aid= ActionContext.getContext().getParameters().get("id");
 
@@ -143,9 +129,6 @@ private int categorys;
 		actionContext.put("remenArticles", remenArticles);
 		return "selectArticle_success";
 	}
-	/*
-	 * 前端页面
-	 */
 	public String selectFront() {
 		// System.out.println("wwww");
 		List<Article> articles = categoryService.selectFrontCate();

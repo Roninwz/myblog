@@ -17,9 +17,8 @@ public class UserDaolmp implements UserDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	// ÓÃ»§µÇÂ¼
-	@Override
-	public boolean login(User user) {
+	
+	/*public boolean login(User user) {
 		boolean flag = false;
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("username", user.getUsername());
@@ -39,35 +38,69 @@ public class UserDaolmp implements UserDao {
 		return flag;
 		// return user;
 	}
-
+*/
 	@Override
 	public boolean register(User user) {
 		// boolean flag=false;
-		// ¸ù¾İhibernateÅäÖÃÎÄ¼şµÄÅäÖÃĞÅÏ¢£¬´´½¨Ò»¸öconfigurationÊµÀı
 		// Configuration configuration=new Configuration().configure();
-		// ´´½¨SessionFactoryÊµÀı
 		// SessionFactory sessionFactory=configuration.buildSessionFactory();
-		// »ñÈ¡Ò»¸öÈ«ĞÂµÄsession¶ÔÏó
 		Session session = sessionFactory.openSession();
-		// ´´½¨Ò»¸öÊÂÎñ
 		Transaction transaction = null;
 		try {
-			// ÓÃsession¿ªÆôÊÂÎñ½øĞĞÊı¾İ²åÈë
 			transaction = session.beginTransaction();
 			session.save(user);
-			// Ìá½»ÊÂÎñ
 			transaction.commit();
 		} catch (Exception e) {
-			// Èç¹ûÊı¾İ²åÈëÊ§°ÜÕâ»Ø¹öµ½³õÊ¼»¯×´Ì¬
 			if (transaction != null) {
 				transaction.rollback();
 				e.printStackTrace();
 			}
 		} finally {
-			// ¼ÇµÃ×îºó¹Ø±Õsession
 			session.close();
 		}
 		return true;
+	}
+
+	@Override
+	public boolean loginUsername(String username, String password) {
+		boolean flag = false;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("username", username);
+		map.put("password",password);
+		// User user=null;
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession();
+
+		User user2 = (User) session.createQuery("from User where username = :username and password = :password")
+				.setParameter("username", map.get("username")).setParameter("password", map.get("password"))
+				.uniqueResult();
+		// System.out.println(user2);
+		if (user2 != null) {
+			// System.out.println(user2);
+			flag = true;
+		}
+		return flag;
+	}
+
+	@Override
+	public boolean loginEmail(String email, String password) {
+		boolean flag = false;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("email", email);
+		map.put("password",password);
+		// User user=null;
+		Session session = sessionFactory.openSession();
+
+		User user2 = (User) session.createQuery("from User where email = :email and password = :password")
+				.setParameter("email", map.get("email")).setParameter("password", map.get("password"))
+				.uniqueResult();
+		System.out.println(user2);
+		if (user2 != null) {
+			System.out.println("æ‰¾åˆ°è¯¥ç”¨æˆ·");
+			flag = true;
+		}
+		session.close();
+		return flag;
 	}
 
 }

@@ -5,10 +5,8 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -16,6 +14,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.zua.blog.entity.User;
 import com.zua.blog.service.UserService;
+import com.zua.blog.tools.CheckFormat;
 
 public class UserAction extends ActionSupport implements ModelDriven<User>{
 	public static final String USER_SESSION = "user.session"; 
@@ -72,17 +71,20 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		//atx.put("username", user.getUsername());
 		Map<String, Object> session = atx.getSession();
 		Cookie[] cookies = request.getCookies();
-		for (int i = 0; i < cookies.length; i++) {// ¶ÔcookiesÖĞµÄÊı¾İ½øĞĞ±éÀú£¬ÕÒµ½ÓÃ»§Ãû¡¢ÃÜÂëµÄÊı¾İ
-			if ("username".equals(cookies[i].getName())) {
-				username = cookies[i].getValue();
-			System.out.println("admin-1:"+username);
-			} else if ("password".equals(cookies[i].getName())) {
-				password = cookies[i].getValue();
-				System.out.println("admin-1:"+password);
+		if(cookies!=null){
+			for (int i = 0; i < cookies.length; i++) {// ï¿½ï¿½cookiesï¿½Ğµï¿½ï¿½ï¿½ï¿½İ½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				if ("username".equals(cookies[i].getName())) {
+					username = cookies[i].getValue();
+				System.out.println("admin-1:"+username);
+				} else if ("password".equals(cookies[i].getName())) {
+					password = cookies[i].getValue();
+					System.out.println("admin-1:"+password);
+				}
 			}
+			session.put("username", username);
+			session.put("password", password);
 		}
-		session.put("username", username);
-		session.put("password", password);
+		
 		
 		return "login";
 	}
@@ -91,39 +93,46 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		return "manage";
 	}
 	public String login() {
+		boolean f =false;
 		HttpServletRequest request = ServletActionContext.getRequest();  
 		HttpServletResponse response = ServletActionContext.getResponse();  
 		String remember=request.getParameter("remember");
 		String yanzhengma=request.getParameter("yanzhengma");
-		//System.out.println(remember);
-		//System.out.println(yanzhengma);
-		boolean f = userService.login(user);
+		String name=request.getParameter("name");
+		String pass=request.getParameter("password");
+		if(CheckFormat.checkEmail(name)){
+			f= userService.loginEmail(name,pass);
+			System.out.println("Email"+name);
+		}else {
+			f= userService.loginUsername(name,pass);
+			System.out.println("Username"+name);
+		}
 		ActionContext atx = ActionContext.getContext();
 		//atx.put("username", user.getUsername());
 		Map<String, Object> session = atx.getSession();
-		// ¶ÔÓ¦ÓÚ WylInterceptor.javaÀ¹½ØÆ÷£¬Õâ¸öÀ¹½ØÆ÷ÀïĞèÒªÓÃµ½
+		
 		
 		
 		if (f) {
 			if("y".equals(remember)){
-//				System.out.println(1);
-				Cookie username = new Cookie("username", user.getUsername());  
-		        Cookie password = new Cookie("password", user.getPassword());  
-		        username.setMaxAge(60*60);//ÖÜÆÚÊÇÒ»¸öĞ¡Ê±  
-		        password.setMaxAge(60*60*24*60);//ÖÜÆÚÊÇ60Ìì  ÒÔÃëÎªµ¥Î»
+				System.out.println(remember);
+				Cookie username = new Cookie("username", name);  
+		        Cookie password = new Cookie("password", pass);  
+		        username.setMaxAge(60*60);//ç”¨æˆ·cookieè¿‡æœŸæ—¶é—´ä¸ºä¸€å¤© 
+		        password.setMaxAge(60*60*24*60);//å•ä½ä¸ºç§’
 		        ServletActionContext.getResponse().addCookie(username);  
 		        ServletActionContext.getResponse().addCookie(password);  
 
 			session.put("is_loginerr","true");
 			session.put("currentUser", user);
-			return "login_success";
-		} else {
-			session.put("is_loginerr", "false");
-			System.out.println("µÇÂ¼Ê§°Ü");
-			return "login_error";
-		}
-	}
+			
+		} 
+		return "login_success";
+	}else {
+		session.put("is_loginerr", "false");
 		return "login_error";
+	}
+		//return "login_error";
 	}
 	public String logout(){
 		HttpServletRequest request = ServletActionContext.getRequest();  
@@ -134,13 +143,12 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		if(session.get("currentUser")!=null){
 			session.remove("currentUser"); 
 		}
-		//Çå³şcookie
 		Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
         	if ("username".equals(cookie.getName())||"password".equals(cookie.getName())) {
         	cookie.setValue(null);
         	cookie.setMaxAge(0);
-        	//cookieÖ»Òª×ö¹ı¸ü¸Ä¶¼ÒªÌí¼Óµ½ÇëÇóÖĞ
+        	//cookieæ›´æ”¹ä¹‹åå¿…é¡»æ·»åŠ 
         	 response.addCookie(cookie);
         	System.out.println(cookie);
         	System.out.println(cookie.getName());

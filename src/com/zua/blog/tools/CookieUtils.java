@@ -41,7 +41,7 @@ public class CookieUtils {
                         String password = split[1];  
                         User user =new User(username,password);
                        
-                       boolean flag = userDAO.login(user);  
+                       boolean flag = userDAO.loginUsername(username,password);  
                         if (flag) {  
                             HttpSession session = request.getSession();  
                             session.setAttribute(UserAction.USER_SESSION, user);// 添加用户到session中  

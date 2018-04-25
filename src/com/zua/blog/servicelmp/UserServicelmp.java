@@ -1,6 +1,5 @@
 package com.zua.blog.servicelmp;
 
-import com.sun.org.apache.regexp.internal.REUtil;
 import com.zua.blog.dao.UserDao;
 import com.zua.blog.entity.User;
 import com.zua.blog.service.UserService;
@@ -16,7 +15,7 @@ public class UserServicelmp implements UserService {
 		this.userDao = userDao;
 	}
 
-	@Override
+	/*@Override
 	public boolean login(User user) {
 		// TODO Auto-generated method stub
 
@@ -25,7 +24,7 @@ public class UserServicelmp implements UserService {
 		return f;
 		// return user;
 	}
-
+*/
 	@Override
 	public boolean register(User user) {
 		boolean flag=false;
@@ -34,6 +33,19 @@ public class UserServicelmp implements UserService {
 		
 		
 		return flag;
+	}
+
+	@Override
+	public boolean loginUsername(String username, String password) {
+		boolean f = userDao.loginUsername(username, password);
+
+		return f;
+	}
+
+	@Override
+	public boolean loginEmail(String email, String password) {
+		boolean f = userDao.loginEmail(email, password);
+		return f;
 	}
 
 }

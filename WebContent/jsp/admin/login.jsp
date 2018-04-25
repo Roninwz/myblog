@@ -41,11 +41,11 @@
     
     <label for="userName" class="sr-only">用户名</label>
   
-    <input type="text" id="userName" name="user.username" value="${username}" class="form-control" placeholder="请输入用户名" required autofocus autocomplete="off" maxlength="10">
+    <input type="text" id="userName" name="name" value="${username}" class="form-control" placeholder="请输入用户名" required autofocus autocomplete="off" maxlength="20">
     
     <label for="userPwd" class="sr-only">密码</label>
     
-    <input type="password" id="userPwd" name="user.password" value="${password}" class="form-control" placeholder="请输入密码" required autocomplete="off" maxlength="18">
+    <input type="password" id="userPwd" name="password" value="${password}" class="form-control" placeholder="请输入密码" required autocomplete="off" maxlength="18">
     <input type="text" id="yanzhengma" name="yanzhengma" value="" class="form-control" placeholder="请输入验证码" required autocomplete="off" maxlength="18">
    
    

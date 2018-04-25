@@ -5,15 +5,15 @@ import java.util.Date;
 public class Article {
 
 
-	private int id;// 文章id
+	private int id;// 
 	private Content content;
-	private String title;// 标题
-	private String abstr;// 摘要
+	private String title;//
+	private String abstr;// 
 	private Category category;
 	private String imgurl;
-	private Date createDate;// 创建日期
-	private String top;// 1为热门文章
-	private String keywords;// 关键字
+	private Date createDate;//
+	private String top;// 
+	private String keywords;//
 
 	public int getId() {
 		return id;
