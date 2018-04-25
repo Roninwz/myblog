@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.zua.blog.entity.Article" table="article">
+		<id name="id" type="java.lang.Integer">
+			<generator class="increment"></generator>
+		</id>
+		<!-- 一般属性· -->
+		<!-- <property name="contentId" length="20" type="java.lang.Integer"></property>
+		<property name="title" length="255" type="java.lang.String"></property>
+		<property name="abstr" length="255" type="java.lang.String"></property>
+		<property name="categoryId" length="2" type="java.lang.String"></property>
+		<property name="categoryValue" length="20" type="java.lang.Integer"></property>
+		<property name="imgurl" length="70" type="java.lang.String"></property>
+		<property name="createDate"  type="java.util.Date"></property>
+		<property name="top" length="2" type="java.lang.String"></property>
+		<property name="key" length="20" type="java.lang.String"></property>
+		<property name="keyValue" length="20" type="java.lang.String"></property> -->
+		<property name="title" length="255" type="java.lang.String"></property>
+		<property name="content" length="255" type="java.lang.String"></property>
+	
+		
+		<property name="categoryValue" length="20" type="java.lang.String"></property>
+		<property name="top" length="2" type="java.lang.String"></property>
+			<property name="key" length="255" type="java.lang.String"></property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.zua.blog.entity.Article" table="article">
+		<id name="id" type="java.lang.Integer">
+			<generator class="increment"></generator>
+		</id>
+		<!-- 一般属性· -->
+		
+		
+		<property name="title" length="255" type="java.lang.String"></property>
+		<property name="abstr" length="255" type="java.lang.String"></property>
+	<property name="imgurl" length="255" type="java.lang.String"></property>
+			<property name="createDate"  type="java.util.Date"></property>
+		<property name="top" length="2" type="java.lang.String"></property>
+			<property name="keywords" length="20" type="java.lang.String"></property>
+			<many-to-one name="content" class="com.zua.blog.entity.Content" column="contentId" unique="true" ></many-to-one>
+        <many-to-one name="category" class="com.zua.blog.entity.Category" column="categoryId" cascade="save-update"></many-to-one> 
+    
+	</class>
+</hibernate-mapping>

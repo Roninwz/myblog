@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.allowed.action.names" value="[a-zA-Z0-9._!/\-]*" />
+	<!--设置静态文件不过滤 -->
+	<constant name="struts.action.excludePattern" value="/static/.*?" />
+	<package name="default" extends="struts-default" abstract="true"></package>
+	<package name="ArticleAction" extends="default">
+		<!-- <action name="article_*" class="articleAction" method="{1}"> </action> -->
+
+		<action name="index" class="articleAction" method="index">
+			<result name="index_success">/jsp/user/index.jsp</result>
+		</action>
+		<action name="selectFront" class="articleAction" method="selectFront">
+			<result name="selectFront_success">/jsp/user/front.jsp</result>
+		</action>
+		<action name="selectBack" class="articleAction" method="selectBack">
+			<result name="selectBack_success">/jsp/user/back.jsp</result>
+		</action>
+		<action name="selectBeau" class="articleAction" method="selectBeau">
+			<result name="selectBeau_success">/jsp/user/beau.jsp</result>
+		</action>
+		<action name="selectLife" class="articleAction" method="selectLife">
+			<result name="selectLife_success">/jsp/user/life.jsp</result>
+		</action>
+		<action name="selectArticle" class="articleAction" method="selectArticle">
+			<result name="selectArticle_success">/jsp/user/article.jsp</result>
+		</action>
+
+		<action name="addA" class="articleAction" method="addA">
+
+			<result name="addA_success">/jsp/admin/add-article.jsp</result>
+		</action>
+		<!-- <action name="addArticle" class="articleAction" method="addArticle"> 
+			<result name="addArticle_success">/jsp/admin/article.jsp</result> <result 
+			name="addArticle_error">/jsp/admin/add-article.jsp</result> </action> -->
+		<action name="addArticle" class="articleAction" method="addArticle">
+			<result name="addArticle_success">/jsp/admin/article.jsp</result>
+			<result name="addArticle_error">/jsp/admin/article.jsp</result>
+		</action>
+		<action name="deleteArticle" class="articleAction" method="deleteArticle">
+
+			<result name="deleteArticle_success">/jsp/admin/article.jsp</result>
+			<result name="deleteArticle_error">/jsp/admin/article.jsp</result>
+
+		</action>
+		<action name="updateA" class="articleAction" method="updateA">
+
+
+			<result name="updateA_success">/jsp/admin/update-article.jsp</result>
+
+		</action>
+		<action name="updateArticle" class="articleAction" method="updateArticle">
+
+			<result name="updateArticle_success">/jsp/admin/article.jsp</result>
+			<result name="updateArticle_error">/jsp/admin/update-article.jsp</result>
+
+		</action>
+		<action name="article" class="articleAction" method="showAllArticle">
+
+			<result name="show_success">/jsp/admin/article.jsp</result>
+		</action>
+
+	</package>
+
+
+
+	<package name="Manages" extends="default">
+
+		<action name="admin" class="userAction" method="admin">
+			<result name="login">/jsp/admin/login.jsp</result>
+		</action>
+		<action name="manageindex" class="userAction" method="manage">
+			<result name="manage">/jsp/admin/index.jsp</result>
+		</action>
+		<action name="admin_login" class="userAction" method="login">
+			<result name="login_success">/jsp/admin/index.jsp</result>
+			<!-- <result name="login_error">/jsp/admin/login.jsp</result> -->
+			<result name="login_error" type="redirect">/admin</result>
+		</action>
+		<action name="admin_logout" class="userAction" method="login">
+			<result name="logout">/jsp/admin/login.jsp</result>
+		</action>
+
+	</package>
+
+</struts>
