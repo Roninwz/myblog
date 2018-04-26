@@ -4,29 +4,25 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;  
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 import com.zua.blog.action.UserAction;
 import com.zua.blog.dao.UserDao;
 import com.zua.blog.entity.User;  
 
   
-/** 
- * cookieµÄÔö¼Ó¡¢É¾³ý¡¢²éÑ¯ 
- */  
+
 public class CookieUtils {  
     public static final String USER_COOKIE = "user.cookie";  
   
-    // Ìí¼ÓÒ»¸öcookie  
     public Cookie addCookie(User user) {  
         Cookie cookie = new Cookie(USER_COOKIE, user.getUsername() + ","  
                 + user.getPassword());  
-        System.out.println("Ìí¼Ócookie");  
-        cookie.setMaxAge(60 * 60 * 24 * 14);// cookie±£´æÁ½ÖÜ  
+        System.out.println("ï¿½ï¿½ï¿½cookie");  
+        cookie.setMaxAge(60 * 60 * 24 * 14);// cookieï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
         return cookie;  
     }  
   
-    // µÃµ½cookie  
     public boolean getCookie(HttpServletRequest request, UserDao userDAO) {  
         Cookie[] cookies = request.getCookies();  
         System.out.println("cookies: " + cookies);  
@@ -39,12 +35,12 @@ public class CookieUtils {
                         String[] split = value.split(",");  
                         String username = split[0];  
                         String password = split[1];  
-                        User user =new User(username,password);
+                        User user =new User("",username,password);
                        
                        boolean flag = userDAO.loginUsername(username,password);  
                         if (flag) {  
                             HttpSession session = request.getSession();  
-                            session.setAttribute(UserAction.USER_SESSION, user);// Ìí¼ÓÓÃ»§µ½sessionÖÐ  
+                            session.setAttribute(UserAction.USER_SESSION, user);// ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½sessionï¿½ï¿½  
                             return true;  
                         }  
                     }  
@@ -54,7 +50,6 @@ public class CookieUtils {
         return false;  
     }  
   
-    // É¾³ýcookie  
     public Cookie delCookie(HttpServletRequest request) {  
         Cookie[] cookies = request.getCookies();  
         if (cookies != null) {  

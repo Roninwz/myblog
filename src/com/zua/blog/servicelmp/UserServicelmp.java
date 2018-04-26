@@ -60,4 +60,14 @@ public class UserServicelmp implements UserService {
 		return userDao.selectUser(username);
 	}
 
+	@Override
+	public boolean isExistUsername(String username) {
+		return userDao.isExistUsername(username);
+	}
+
+	@Override
+	public boolean isExistEmail(String email) {
+		return userDao.isExistEmail(email);
+	}
+
 }

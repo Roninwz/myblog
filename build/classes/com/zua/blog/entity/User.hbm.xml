@@ -8,7 +8,7 @@
 		</id>
 		<!-- 一般属性· -->
 	<property name="username" length="20" type="java.lang.String"></property>
-	<property name="password" length="20" type="java.lang.String"></property>
+	<property name="password" length="50" type="java.lang.String"></property>
 	<property name="email" length="20" type="java.lang.String"></property>
 	
 	</class>

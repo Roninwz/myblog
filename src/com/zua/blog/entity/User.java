@@ -38,11 +38,13 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String username, String password) {
+	
+
+	public User(String username, String password, String email) {
 		super();
-		
 		this.username = username;
 		this.password = password;
+		this.email = email;
 	}
 
 	public User() {

@@ -123,13 +123,47 @@ public class UserDaolmp implements UserDao {
 	@Override
 	public List<User> selectUser(String username) {
        Session session = sessionFactory.openSession();
-		
-		List<User> entities = session.createQuery("from User as u where u.username like '%"+username+"%'").list();
+       Map<String, Object> map = new HashMap<String, Object>();
+		map.put("username", username);
+		List<User> entities = session.createQuery("from User where username = :username").list();
 		
 
 		 session.close();
 		 
 		 return entities;
+	}
+
+
+	@Override
+	public boolean isExistUsername(String username) {
+		Session session = sessionFactory.openSession();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("username", username);
+		boolean flag=false;
+		User user = (User) session.createQuery("from User where username = :username").setParameter("username", map.get("username")).uniqueResult();;
+		System.out.println("找到"+user.getUsername());
+		if(user!=null){
+			flag=true;
+		}
+		 session.close();
+		 return flag;
+	}
+
+
+	@Override
+	public boolean isExistEmail(String email) {
+		Session session = sessionFactory.openSession();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("email", email);
+		System.out.println(email);
+		boolean flag=false;
+		User user = (User) session.createQuery("from User where email = :email").setParameter("email", map.get("email")).uniqueResult();;
+		System.out.println(user);
+		if(user!=null){
+			flag=true;
+		}
+		 session.close();
+		 return flag;
 	}
 
 }

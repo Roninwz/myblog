@@ -1,9 +1,11 @@
 package com.zua.blog.action;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +29,10 @@ import com.zua.blog.entity.User;
 import com.zua.blog.service.UserService;
 import com.zua.blog.tools.CheckFormat;
 import com.zua.blog.tools.FileDownload;
+import com.zua.blog.tools.MD5Util;
+
+import net.sf.json.JSONObject;
+
 
 public class UserAction extends ActionSupport implements ModelDriven<User>{
 	public static final String USER_SESSION = "user.session"; 
@@ -44,6 +50,19 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		this.remember = remember;
 	}
 */
+	
+	 private String returndata;
+	    //从Action返回json数据给调用的Ajax，毕竟用用Ajax基本上要交互下嘛。
+	    
+	    //对应getter,setter
+	    public String getReturndata() {
+	        return returndata;
+	    }
+
+	    public void setReturndata(String returndata) {
+	        this.returndata = returndata;
+	    }
+
 	public UserService getUserService() {
 		return userService;
 	}
@@ -112,11 +131,12 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 		String yanzhengma=request.getParameter("yanzhengma");
 		String name=request.getParameter("name");
 		String pass=request.getParameter("password");
+		String md5pass=MD5Util.string2MD5(pass);
 		if(CheckFormat.checkEmail(name)){
-			f= userService.loginEmail(name,pass);
+			f= userService.loginEmail(name,md5pass);
 			System.out.println("Email"+name);
 		}else {
-			f= userService.loginUsername(name,pass);
+			f= userService.loginUsername(name,md5pass);
 			System.out.println("Username"+name);
 		}
 		ActionContext atx = ActionContext.getContext();
@@ -227,5 +247,73 @@ public class UserAction extends ActionSupport implements ModelDriven<User>{
 	      }*/
 	     
 	      return "export_success";
+	}
+	public String register(){
+		
+			return "register";
+		
+		
+	}
+	public String registerCheck(){
+		User use=new User();
+		use.setUsername(user.getUsername());
+		use.setEmail(user.getEmail());
+		use.setPassword(MD5Util.string2MD5(user.getPassword()));
+		System.out.println(use.getPassword());
+		System.out.println(use.getEmail());
+		System.out.println(use.getUsername());
+		boolean f=userService.register(use);
+		if(f){
+			return "register_success";
+		}else {
+			return "register_error";
+		}
+		
+	}
+	
+	
+	public String isExistUsername(){
+		ActionContext atx = ActionContext.getContext();
+		//atx.put("username", user.getUsername());
+		 Map<String, String> map=new HashMap<>();
+		 boolean f=userService.isExistUsername(user.getUsername());
+		if(f){
+			 map.put("isUsernameTrue","用户名已存在");
+		}else {
+			 map.put("isUsernameTrue","用户名符合要求");
+		}
+		
+		//map.put("uname", "用户名");
+		System.out.println("f:"+f);
+		JSONObject json=JSONObject.fromObject(map);
+		/*JSONObject json = new JSONObject();  
+        Set<String> set = map.keySet();  
+        for (Iterator<String> it = set.iterator();it.hasNext();) {  
+            String key = it.next();  
+            json.put(key, map.get(key));  
+        }      */   
+		//System.out.println(json);
+	    returndata=json.toString();
+	    //System.out.println("returndata:"+returndata);
+		return "username_exist";
+	}
+	public String isExistEmail(){
+		//String exist=null;
+		ActionContext atx = ActionContext.getContext();
+		//atx.put("username", user.getUsername());
+		 Map<String, Object> map=atx.getSession();
+		boolean f=userService.isExistEmail(user.getEmail());
+		if(f){
+			 map.put("isEmailTrue","邮箱已存在");
+		}else {
+			 map.put("isEmailTrue","邮箱符合要求");
+		}
+		//map.put("isEmailTrue",f);
+		//map.put("uname", "用户名");
+		System.out.println("ww");
+		 JSONObject json=JSONObject.fromObject(map);
+		 System.out.println(json);
+	    returndata=json.toString();
+		return "email_exist";
 	}
 }

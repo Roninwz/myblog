@@ -59,6 +59,7 @@
           <label>
             <input type="checkbox"  name="remember" value="y"> <span style="top:-5px;">记住我</span>
           </label>
+          <a href="admin_register">立即注册</a>
      </div>
     <button class="btn btn-lg btn-primary btn-block" type="submit" id="signinSubmit">登录</button>
 

@@ -83,13 +83,41 @@
 			<!-- <result name="login_error">/jsp/admin/login.jsp</result> -->
 			<result name="login_error" type="redirect">/admin</result>
 		</action>
+		<action name="admin_register" class="userAction" method="register">
+
+			<result name="register">/jsp/admin/register.jsp</result>
+		</action>
+		<action name="admin_registerCheck" class="userAction" method="registerCheck">
+			<result name="register_success">/jsp/admin/login.jsp</result>
+			<result name="register_error">/jsp/admin/register.jsp</result>
+		</action>
 		<action name="admin_logout" class="userAction" method="login">
 			<result name="logout">/jsp/admin/login.jsp</result>
 		</action>
 		<action name="exportexcel" class="userAction" method="exportExcel">
 			<result name="export_success">/jsp/admin/index.jsp</result>
 		</action>
+		
+
+
 
 	</package>
-
+<package name="User" extends="struts-default">
+		<result-types>
+            <result-type name="json" class="org.apache.struts2.json.JSONResult"/>
+        </result-types>
+        <interceptors>
+            <interceptor name="json" class="org.apache.struts2.json.JSONInterceptor"/>
+        </interceptors>
+        <action name="isexistusername" class="userAction" method="isExistUsername">
+            <result name="username_exist" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+ 		<action name="isexistemail" class="userAction" method="isExistEmail">
+            <result name="email_exist" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action> 
+</package>
 </struts>
